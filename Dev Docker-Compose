@@ -59,10 +59,11 @@ services:
       - TZ=America/Chicago
       - LAT=LAT
       - LONG=LONG
-      - FEEDER_ID=FEEDER_ID
+      - FEEDER_ID=ID
       - RECEIVER_TYPE=rtlsdr
       - ALLOW_MLAT=yes
       - MLAT_RESULTS=yes
+      - DUMP1090_ADAPTIVE_RANGE=true
     tmpfs:
       - /run:exec,size=64M
       - /var/log
