@@ -1,0 +1,138 @@
+version: "3.7"
+services:
+  foldingathome:
+    image: lscr.io/linuxserver/foldingathome:latest
+    container_name: foldingathome
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/Chicago
+    volumes:
+      - /Desktop/Folding@Home:/config
+    ports:
+      - 7396:7396
+      - 36330:36330 #optional
+    restart: unless-stopped
+
+  heimdall:
+    image: lscr.io/linuxserver/heimdall:latest
+    container_name: heimdall
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/Chicago
+    volumes:
+      - /Desktop/Heimdall:/config
+    ports:
+      - 480:80
+      - 1443:443
+    restart: unless-stopped
+
+  calibre-web:
+    image: lscr.io/linuxserver/calibre-web:latest
+    container_name: calibre-web
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/Chicago
+      - DOCKER_MODS=linuxserver/mods:universal-calibre #optional
+      - OAUTHLIB_RELAX_TOKEN_SCOPE=1 #optional
+    volumes:
+      - /Desktop/Calibre:/config
+      - /Desktop/Calibre/library:/books
+    ports:
+      - 8083:8083
+    restart: unless-stopped
+
+  unifi-controller:
+    image: lscr.io/linuxserver/unifi-controller:latest
+    container_name: unifi-controller 
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/Chicago
+      - MEM_LIMIT=1024 #optional
+      - MEM_STARTUP=1024 #optional
+    volumes:
+      - /Desktop/Unifi:/config
+    ports:
+      - 8443:8443
+      - 3478:3478/udp
+      - 10001:10001/udp
+      - 8080:8080
+      - 8843:8843 #optional 
+      - 8880:8880 #optional
+      - 6789:6789 #optional
+      - 5514:5514/udp #optional
+    restart: unless-stopped
+
+  wireguard:
+    image: lscr.io/linuxserver/wireguard:latest
+    container_name: wireguard
+    cap_add:
+      - NET_ADMIN
+      - SYS_MODULE
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/Chicago
+      - SERVERPORT=51820
+      - PEERS=4
+      - PEERDNS=192.168.50.1
+      - INTERNAL_SUBNET=10.6.0.0
+      - ALLOWEDIPS=0.0.0.0/0 #optional
+      - LOG_CONFS=true
+    volumes:
+      - /Desktop/WireGuard/config:/config
+    ports:
+      - 51820:51820/udp
+    sysctls:
+      - net.ipv4.conf.all.src_valid_mark=1
+    restart: unless-stopped
+
+  snowflake-proxy:
+    network_mode: host
+    image: thetorproject/snowflake-proxy:latest
+    container_name: snowflake-proxy
+    restart: unless-stopped
+
+  homeassistant:
+    container_name: homeassistant
+    image: "ghcr.io/home-assistant/home-assistant:stable"
+    volumes:
+      - /Desktop/HomeAssistantContainer:/config
+      - /Desktop/HomeAssistantContainer/media:/media
+      - /run/dbus:/run/dbus:ro
+      - /etc/localtime:/etc/localtime:ro
+    restart: unless-stopped
+    privileged: true
+    network_mode: host
+
+  obfs4-bridge:
+    image: thetorproject/obfs4-bridge:latest
+    networks:
+      - obfs4_bridge_external_network
+    environment:
+      # Exit with an error message if OR_PORT is unset or empty.
+      - OR_PORT=${OR_PORT:?Env var OR_PORT is not set.}
+      # Exit with an error message if PT_PORT is unset or empty.
+      - PT_PORT=${PT_PORT:?Env var PT_PORT is not set.}
+      # Exit with an error message if EMAIL is unset or empty.
+      - EMAIL=${EMAIL:?Env var EMAIL is not set.}
+      # Nickname with default value: "DockerObfs4Bridge"
+      - NICKNAME=${NICKNAME:-DockerObfs4Bridge}
+    env_file:
+      - .env
+    volumes:
+      - data:/var/lib/tor
+    ports:
+      - ${OR_PORT}:${OR_PORT}
+      - ${PT_PORT}:${PT_PORT}
+    restart: unless-stopped
+
+volumes:
+  data:
+    name: tor-datadir-${OR_PORT}-${PT_PORT}
+
+networks:
+  obfs4_bridge_external_network:
