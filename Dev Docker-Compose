@@ -1,0 +1,74 @@
+version: "3.7"
+services:
+  foldingathome:
+    image: lscr.io/linuxserver/foldingathome:latest
+    container_name: foldingathome
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/Chicago
+    volumes:
+      - /Desktop/Folding@Home:/config
+    ports:
+      - 7396:7396
+      - 36330:36330 #optional
+    restart: unless-stopped
+
+  nextcloud:
+    image: lscr.io/linuxserver/nextcloud:latest
+    container_name: nextcloud
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/Chicago
+    volumes:
+      - /Desktop/Nextcloud:/config
+      - /Desktop/Nextcloud:/data
+    ports:
+      - 443:443
+    restart: unless-stopped
+
+  emulatorjs:
+    image: lscr.io/linuxserver/emulatorjs:latest
+    container_name: emulatorjs 
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/Chicago
+      - SUBFOLDER=/ #optional
+    volumes:
+      - /Desktop/emulatorjs/config:/config
+      - /Desktop/emulatorjs/data:/data
+    ports:
+      - 3001:3000
+      - 80:80
+    restart: unless-stopped
+
+  piaware:
+    image: ghcr.io/sdr-enthusiasts/docker-piaware:latest
+    tty: true
+    container_name: piaware
+    restart: always
+    devices:
+      - /dev/bus/usb:/dev/bus/usb
+    ports:
+      - 8080:80
+      - 30003:30003
+      - 30005:30005
+    environment:
+      - TZ=America/Chicago
+      - LAT=LAT
+      - LONG=LONG
+      - FEEDER_ID=FEEDER_ID
+      - RECEIVER_TYPE=rtlsdr
+      - ALLOW_MLAT=yes
+      - MLAT_RESULTS=yes
+    tmpfs:
+      - /run:exec,size=64M
+      - /var/log
+
+  snowflake-proxy:
+    network_mode: host
+    image: thetorproject/snowflake-proxy:latest
+    container_name: snowflake-proxy
+    restart: unless-stopped
