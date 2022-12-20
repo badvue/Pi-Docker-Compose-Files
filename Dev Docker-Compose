@@ -64,6 +64,7 @@ services:
       - ALLOW_MLAT=yes
       - MLAT_RESULTS=yes
       - DUMP1090_ADAPTIVE_RANGE=true
+      - DUMP1090_ADAPTIVE_DUTY_CYCLE=100
     tmpfs:
       - /run:exec,size=64M
       - /var/log
