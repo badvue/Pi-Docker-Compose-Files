@@ -157,6 +157,16 @@ services:
       - ${PT_PORT}:${PT_PORT}
     restart: unless-stopped
 
+  portainer-ce:
+    container_name: portainer
+    image: portainer/portainer-ce:latest
+    ports:
+      - 9443:9443
+    restart: always
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /Desktop/Portainer:/data
+
 volumes:
   data:
     name: tor-datadir-${OR_PORT}-${PT_PORT}
