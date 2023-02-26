@@ -108,6 +108,32 @@ services:
     privileged: true
     network_mode: host
 
+  wordpress:
+    container_name: wordpress
+    image: wordpress
+    restart: unless-stopped
+    ports:
+      - 8090:80
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_USER: pi
+      WORDPRESS_DB_PASSWORD: Dm4sxfm5?@!
+      WORDPRESS_DB_NAME: wordpressdb1
+    volumes:
+      - /Desktop/WordPress/wordpress:/var/www/html
+
+  db:
+    container_name: mariadb
+    image: yobasystems/alpine-mariadb:latest
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: wordpressdb1
+      MYSQL_USER: pi
+      MYSQL_PASSWORD: Dm4sxfm5?@!
+      MYSQL_RANDOM_ROOT_PASSWORD: '1'
+    volumes:
+      - /Desktop/WordPress/wordpress:/var/lib/mysql
+
   obfs4-bridge:
     image: thetorproject/obfs4-bridge:latest
     networks:
