@@ -135,6 +135,7 @@ services:
       - /Desktop/WordPress/wordpress:/var/lib/mysql
 
   obfs4-bridge:
+    container_name: Tor_Bridge
     image: thetorproject/obfs4-bridge:latest
     networks:
       - obfs4_bridge_external_network
