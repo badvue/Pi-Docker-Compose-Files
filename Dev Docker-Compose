@@ -57,9 +57,9 @@ services:
       - 30005:30005
     environment:
       - TZ=America/Chicago
-      - LAT=XXXX
-      - LONG=XXXX
-      - FEEDER_ID=XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX
+      - LAT=
+      - LONG=
+      - FEEDER_ID=
       - RECEIVER_TYPE=rtlsdr
       - ALLOW_MLAT=yes
       - MLAT_RESULTS=yes
@@ -123,3 +123,13 @@ services:
     container_name: scanservjs
     image: sbs20/scanservjs:latest
     restart: unless-stopped
+
+  portainer-ce:
+    container_name: portainer
+    image: portainer/portainer-ce:latest
+    ports:
+      - 9443:9443
+    restart: always
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /Desktop/Portainer:/data
