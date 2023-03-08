@@ -105,6 +105,9 @@ services:
     image: alexxit/go2rtc
     container_name: go2rtc
     network_mode: host
+    depends_on:
+      ring-mqtt:
+        condition: service_started
     privileged: true
     restart: unless-stopped
     environment:
