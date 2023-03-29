@@ -49,7 +49,7 @@ services:
     container_name: piaware
     restart: always
     devices:
-      - /dev/bus/usb:/dev/bus/usb
+      - /dev/PiAware:/dev/bus/usb/001/003
     ports:
       - 8080:80
       - 30003:30003
