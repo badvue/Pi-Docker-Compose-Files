@@ -118,7 +118,7 @@ services:
       - 8090:80
     environment:
       WORDPRESS_DB_HOST: db
-      WORDPRESS_DB_USER: XX
+      WORDPRESS_DB_USER: pi
       WORDPRESS_DB_PASSWORD: XXXXXXXX
       WORDPRESS_DB_NAME: wordpressdb1
     volumes:
@@ -130,7 +130,7 @@ services:
     restart: unless-stopped
     environment:
       MYSQL_DATABASE: wordpressdb1
-      MYSQL_USER: XX
+      MYSQL_USER: pi
       MYSQL_PASSWORD: XXXXXXXX
       MYSQL_RANDOM_ROOT_PASSWORD: '1'
     volumes:
@@ -145,3 +145,48 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - /Desktop/Portainer:/data
+
+  wordpress2:
+    container_name: Mia_Blog
+    image: wordpress
+    restart: unless-stopped
+    depends_on:
+      db2:
+        condition: service_started
+    ports:
+      - 8091:80
+    environment:
+      WORDPRESS_DB_HOST: db2
+      WORDPRESS_DB_USER: pi
+      WORDPRESS_DB_PASSWORD: XXXXXXXX
+      WORDPRESS_DB_NAME: wordpressdb2
+    volumes:
+      - /Desktop/WordPress/Mia_Blog:/var/www/html
+
+  db2:
+    container_name: Mia_DB
+    image: yobasystems/alpine-mariadb:latest
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: wordpressdb2
+      MYSQL_USER: pi
+      MYSQL_PASSWORD: XXXXXXXX
+      MYSQL_RANDOM_ROOT_PASSWORD: '1'
+    volumes:
+      - /Desktop/WordPress/Mia_Blog:/var/lib/mysql
+
+  nut-ups:
+    image: upshift/nut-upsd:latest
+    container_name: nut_upsd
+    restart: always
+    ports:
+      - 3493:3493
+    devices:
+      - /dev/CyberPowerUPS:/dev/bus/usb
+    environment:
+      UPS_NAME: Living_Room
+      API_USER: pi
+      API_PASSWORD: XXXXXXXX
+      ADMIN_PASSWORD: XXXXXXXX
+    volumes:
+      - /dev/bus/usb:/dev/bus/usb
