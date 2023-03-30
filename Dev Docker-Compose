@@ -49,16 +49,18 @@ services:
     container_name: piaware
     restart: always
     devices:
-      - /dev/PiAware:/dev/bus/usb/001/003
+      - /dev/PiAware:/dev/bus/usb
+    volumes:
+      - /dev/bus/usb:/dev/bus/usb
     ports:
       - 8080:80
       - 30003:30003
       - 30005:30005
     environment:
       - TZ=America/Chicago
-      - LAT=
-      - LONG=
-      - FEEDER_ID=
+      - LAT=XXXXXXXX
+      - LONG=XXXXXXXX
+      - FEEDER_ID=XXXXXXXX
       - RECEIVER_TYPE=rtlsdr
       - ALLOW_MLAT=yes
       - MLAT_RESULTS=yes
@@ -118,7 +120,7 @@ services:
     ports:
       - 8070:8080 
     environment:
-      - SANED_NET_HOSTS=192.168.50.32
+      - SANED_NET_HOSTS=192.168.10.2
     volumes:
       - /Desktop/scan:/app/data/output
       - /Desktop/scan:/app/config
@@ -135,3 +137,19 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - /Desktop/Portainer:/data
+
+  nut-ups:
+    image: upshift/nut-upsd:latest
+    container_name: nut_upsd
+    restart: always
+    ports:
+      - 3493:3493
+    devices:
+      - /dev/CyberPowerUPS:/dev/bus/usb
+    environment:
+      UPS_NAME: Third_Bedroom
+      API_USER: pi
+      API_PASSWORD: XXXXXXXX
+      ADMIN_PASSWORD: XXXXXXXX
+    volumes:
+      - /dev/bus/usb:/dev/bus/usb
