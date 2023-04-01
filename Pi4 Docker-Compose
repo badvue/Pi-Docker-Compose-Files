@@ -77,7 +77,7 @@ services:
       - TZ=America/Chicago
       - SERVERPORT=51820
       - PEERS=4
-      - PEERDNS=192.168.50.1
+      - PEERDNS=auto
       - INTERNAL_SUBNET=10.6.0.0
       - ALLOWEDIPS=0.0.0.0/0 #optional
       - LOG_CONFS=true
