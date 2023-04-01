@@ -1,0 +1,6 @@
+# Pi4
+SUBSYSTEM=="usb", ATTRS{idProduct}=="0601", ATTRS{idVendor}=="0764", SYMLINK+="CyberPowerUPS"
+
+# Dev
+SUBSYSTEM=="usb", ATTRS{idProduct}=="2832", ATTRS{idVendor}=="0bda", SYMLINK+="PiAware"
+SUBSYSTEM=="usb", ATTRS{idProduct}=="0601", ATTRS{idVendor}=="0764", SYMLINK+="CyberPowerUPS"
