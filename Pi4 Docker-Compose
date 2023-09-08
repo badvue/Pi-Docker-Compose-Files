@@ -23,7 +23,6 @@ services:
     volumes:
       - /Desktop/Heimdall:/config
     ports:
-      - 480:80
       - 1443:443
     restart: unless-stopped
 
