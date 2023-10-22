@@ -73,10 +73,10 @@ services:
       - /run:exec,size=64M
       - /var/log
 
-  snowflake-proxy:
+  Snowflake-Proxy:
     network_mode: host
     image: thetorproject/snowflake-proxy:latest
-    container_name: snowflake-proxy
+    container_name: Snowflake-Proxy
     restart: unless-stopped
 
   ring-mqtt:
