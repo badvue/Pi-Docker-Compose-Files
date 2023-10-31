@@ -10,7 +10,6 @@ services:
       - /Desktop/Folding@Home:/config
     ports:
       - 7396:7396
-      - 36330:36330 #optional
     restart: unless-stopped
 
   heimdall:
