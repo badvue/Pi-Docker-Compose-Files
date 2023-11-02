@@ -227,3 +227,11 @@ services:
       - 6789:6789
       - 5514:5514/udp
     restart: unless-stopped
+
+  iSponsorBlockTV:
+    network_mode: host
+    image: ghcr.io/dmunozv04/isponsorblocktv
+    container_name: iSponsorBlockTV
+    restart: unless-stopped
+    volumes:
+      - /Desktop/iSponsorBlockTV:/app/data
