@@ -1,0 +1,2 @@
+# To add new devices to iSponsorBlockTV through CLI
+sudo docker run --rm -it --net=host -v /Desktop/iSponsorBlockTV:/app/data ghcr.io/dmunozv04/isponsorblocktv --setup-cli
