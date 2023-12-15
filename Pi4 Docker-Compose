@@ -229,7 +229,6 @@ services:
     restart: unless-stopped
 
   iSponsorBlockTV:
-    network_mode: host
     image: ghcr.io/dmunozv04/isponsorblocktv
     container_name: iSponsorBlockTV
     restart: unless-stopped
