@@ -65,9 +65,9 @@ services:
       - MLAT_RESULTS=yes
       - RTLSDR_GAIN=max
       - DUMP1090_ADAPTIVE_RANGE=true
-      - DUMP1090_ADAPTIVE_DUTY_CYCLE=100
+      - DUMP1090_ADAPTIVE_DUTY_CYCLE=25
       - DUMP1090_ADAPTIVE_RANGE_TARGET=25
-      - DUMP1090_ADAPTIVE_MIN_GAIN=40
+      - DUMP1090_ADAPTIVE_MIN_GAIN=48
     tmpfs:
       - /run:exec,size=64M
       - /var/log
