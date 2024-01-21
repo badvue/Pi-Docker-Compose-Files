@@ -39,7 +39,8 @@ services:
       - /Desktop/emulatorjs/data:/data
     ports:
       - 3001:3000
-      - 80:80
+      - 8080:80
+      - 4001:4001
     restart: unless-stopped
 
   piaware:
@@ -205,3 +206,22 @@ services:
       - /run/user/1000/podman/podman.sock:/run/user/1000/podman/podman.sock
     environment:
       - "GLANCES_OPT=-w"
+
+  habridge:
+    image: lscr.io/linuxserver/habridge:latest
+    container_name: habridge
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/Chicago
+      - "SEC_KEY=SECRET"
+    volumes:
+      - /Desktop/Habridge:/config
+    ports:
+      - 80:8080
+      - 50000:50000
+    restart: unless-stopped
+
+volumes:
+  wordpress:
+  db:
