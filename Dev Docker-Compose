@@ -207,21 +207,6 @@ services:
     environment:
       - "GLANCES_OPT=-w"
 
-  habridge:
-    image: lscr.io/linuxserver/habridge:latest
-    container_name: habridge
-    environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=America/Chicago
-      - "SEC_KEY=SECRET"
-    volumes:
-      - /Desktop/Habridge:/config
-    ports:
-      - 80:8080
-      - 50000:50000
-    restart: unless-stopped
-
 volumes:
   wordpress:
   db:
