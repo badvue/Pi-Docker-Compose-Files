@@ -73,12 +73,6 @@ services:
       - /run:exec,size=64M
       - /var/log
 
-  Snowflake-Proxy:
-    network_mode: host
-    image: thetorproject/snowflake-proxy:latest
-    container_name: Snowflake-Proxy
-    restart: unless-stopped
-
   ring-mqtt:
     container_name: ring-mqtt
     restart: unless-stopped
@@ -120,13 +114,12 @@ services:
 
   scanservjs:
     ports:
-      - 8070:8080 
-    environment:
-      - SANED_NET_HOSTS=192.168.10.2
+      - 8070:8080
     volumes:
       - /Desktop/scan:/app/data/output
       - /Desktop/scan:/app/config
-    container_name: scanservjs
+      - /var/run/dbus:/var/run/dbus
+    container_name: Scanservjs
     image: sbs20/scanservjs:latest
     restart: unless-stopped
 
