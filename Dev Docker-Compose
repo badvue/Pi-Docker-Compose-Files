@@ -6,6 +6,8 @@ services:
       - PUID=1000
       - PGID=1000
       - TZ=America/Chicago
+      - ACCOUNT_TOKEN=XXXXX
+      - MACHINE_NAME=XXX
     volumes:
       - /Desktop/Folding@Home:/config
     ports:
@@ -14,7 +16,7 @@ services:
 
   nextcloud:
     image: lscr.io/linuxserver/nextcloud:latest
-    container_name: nextcloud
+    container_name: Nextcloud
     environment:
       - PUID=1000
       - PGID=1000
@@ -28,7 +30,7 @@ services:
 
   emulatorjs:
     image: lscr.io/linuxserver/emulatorjs:latest
-    container_name: emulatorjs 
+    container_name: Emulatorjs
     environment:
       - PUID=1000
       - PGID=1000
@@ -76,7 +78,7 @@ services:
   ring-mqtt:
     container_name: ring-mqtt
     restart: unless-stopped
-    image: tsightler/ring-mqtt
+    image: tsightler/ring-mqtt:latest
     ports:
       - 8554:8554
     volumes:
@@ -96,7 +98,7 @@ services:
       - /Desktop/MQTT/log:/mosquitto/log
     ports:
       - 1883:1883
-      - 9001:9001    
+      - 9001:9001
 
   go2rtc:
     image: alexxit/go2rtc
@@ -160,7 +162,7 @@ services:
       - 8126:8126
 
   wordpress:
-    container_name: travel_wordpress
+    container_name: Travel-Blog
     image: wordpress
     restart: unless-stopped
     depends_on:
@@ -174,7 +176,7 @@ services:
       WORDPRESS_DB_PASSWORD: 123456
       WORDPRESS_DB_NAME: travel
     volumes:
-      - /Desktop/WordPress/wordpress:/var/www/html
+      - /Desktop/WordPress/Travel:/var/www/html
 
   db:
     container_name: mariadb
@@ -186,7 +188,7 @@ services:
       MYSQL_PASSWORD: 123456
       MYSQL_RANDOM_ROOT_PASSWORD: '1'
     volumes:
-      - /Desktop/WordPress/wordpress:/var/lib/mysql
+      - /Desktop/WordPress/Travel/mysql:/var/lib/mysql
 
   monitoring:
     image: nicolargo/glances:latest-full
