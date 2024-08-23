@@ -168,13 +168,15 @@ services:
     depends_on:
       db:
         condition: service_started
+      redis:
+        condition: service_started
     ports:
       - 8090:80
     environment:
       WORDPRESS_DB_HOST: db
-      WORDPRESS_DB_USER: dev
-      WORDPRESS_DB_PASSWORD: 123456
-      WORDPRESS_DB_NAME: travel
+      WORDPRESS_DB_USER: XXXXXXXX
+      WORDPRESS_DB_PASSWORD: XXXXXXXX
+      WORDPRESS_DB_NAME: XXXXXXXX
     volumes:
       - /Desktop/WordPress/Travel:/var/www/html
 
@@ -184,9 +186,9 @@ services:
     restart: unless-stopped
     environment:
       MYSQL_DATABASE: travel
-      MYSQL_USER: dev
-      MYSQL_PASSWORD: 123456
-      MYSQL_RANDOM_ROOT_PASSWORD: '1'
+      MYSQL_USER: XXXXXXXX
+      MYSQL_PASSWORD: XXXXXXXX
+      MYSQL_RANDOM_ROOT_PASSWORD: 'X'
     volumes:
       - /Desktop/WordPress/Travel/mysql:/var/lib/mysql
 
@@ -201,6 +203,15 @@ services:
       - /run/user/1000/podman/podman.sock:/run/user/1000/podman/podman.sock
     environment:
       - "GLANCES_OPT=-w"
+
+  redis:
+    image: redis:latest
+    container_name: redis-cache
+    volumes:
+      - /Desktop/Redis:/data
+    ports:
+      - 6379:6379
+    restart: unless-stopped
 
 volumes:
   wordpress:
