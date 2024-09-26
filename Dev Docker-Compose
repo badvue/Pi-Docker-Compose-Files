@@ -136,7 +136,7 @@ services:
       - /Desktop/Portainer:/data
 
   nut-ups:
-    image: upshift/nut-upsd:latest
+    image: botsudo/nut-upsd:latest
     container_name: nut_upsd
     restart: always
     ports:
