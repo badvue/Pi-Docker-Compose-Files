@@ -148,7 +148,7 @@ services:
       - /Desktop/WordPress/Mia_Blog/mysql:/var/lib/mysql
 
   nut-ups:
-    image: upshift/nut-upsd:latest
+    image: botsudo/nut-upsd:latest
     container_name: nut_upsd
     restart: always
     ports:
