@@ -172,6 +172,9 @@ services:
       - /Desktop/ha_dockermon:/config
     ports:
       - 8126:8126
+    logging:
+      options:
+        max-size: 100m
 
   monitoring:
     image: nicolargo/glances:latest-full
