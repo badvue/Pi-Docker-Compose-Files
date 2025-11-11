@@ -1,19 +1,4 @@
 services:
-  foldingathome:
-    image: lscr.io/linuxserver/foldingathome:latest
-    container_name: foldingathome
-    environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=America/Chicago
-      - ACCOUNT_TOKEN=XXXXX
-      - MACHINE_NAME=XXX
-    volumes:
-      - /Desktop/Folding@Home:/config
-    ports:
-      - 7396:7396
-    restart: unless-stopped
-
   nextcloud:
     image: lscr.io/linuxserver/nextcloud:latest
     container_name: Nextcloud
@@ -28,22 +13,22 @@ services:
       - 443:443
     restart: unless-stopped
 
-  emulatorjs:
-    image: lscr.io/linuxserver/emulatorjs:latest
-    container_name: Emulatorjs
-    environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=America/Chicago
-      - SUBFOLDER=/ #optional
-    volumes:
-      - /Desktop/emulatorjs/config:/config
-      - /Desktop/emulatorjs/data:/data
-    ports:
-      - 3001:3000
-      - 8080:80
-      - 4001:4001
-    restart: unless-stopped
+#  emulatorjs:
+#    image: lscr.io/linuxserver/emulatorjs:latest
+#    container_name: Emulatorjs
+#    environment:
+#      - PUID=1000
+#      - PGID=1000
+#      - TZ=America/Chicago
+#      - SUBFOLDER=/ #optional
+#    volumes:
+#      - /Desktop/emulatorjs/config:/config
+#      - /Desktop/emulatorjs/data:/data
+#    ports:
+#      - 3001:3000
+#      - 8080:80
+#      - 4001:4001
+#    restart: unless-stopped
 
   piaware:
     image: ghcr.io/sdr-enthusiasts/docker-piaware:latest
@@ -60,9 +45,9 @@ services:
       - 30005:30005
     environment:
       - TZ=America/Chicago
-      - LAT=33.36396249231442
-      - LONG=-86.81919215985052
-      - FEEDER_ID=e0798e55-d3ff-4bd7-bd04-610c16d74b96
+      - LAT=XXXXXXXXXXX
+      - LONG=XXXXXXXXXXX
+      - FEEDER_ID=XXXXXXXXXXX
       - RECEIVER_TYPE=rtlsdr
       - ALLOW_MLAT=yes
       - MLAT_RESULTS=yes
@@ -151,19 +136,6 @@ services:
     volumes:
       - /dev/bus/usb:/dev/bus/usb
 
-  docker_mon:
-    image: philhawthorne/ha-dockermon:edge
-    container_name: ha_dockermon
-    restart: always
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - /Desktop/ha_dockermon:/config
-    ports:
-      - 8126:8126
-    logging:
-      options:
-        max-size: 100m
-
   wordpress:
     container_name: Travel-Blog
     image: wordpress
@@ -177,9 +149,9 @@ services:
       - 8090:80
     environment:
       WORDPRESS_DB_HOST: db
-      WORDPRESS_DB_USER: XXXXXXXX
+      WORDPRESS_DB_USER: dev
       WORDPRESS_DB_PASSWORD: XXXXXXXX
-      WORDPRESS_DB_NAME: XXXXXXXX
+      WORDPRESS_DB_NAME: travel
     volumes:
       - /Desktop/WordPress/Travel:/var/www/html
 
@@ -189,9 +161,9 @@ services:
     restart: unless-stopped
     environment:
       MYSQL_DATABASE: travel
-      MYSQL_USER: XXXXXXXX
+      MYSQL_USER: dev
       MYSQL_PASSWORD: XXXXXXXX
-      MYSQL_RANDOM_ROOT_PASSWORD: 'X'
+      MYSQL_RANDOM_ROOT_PASSWORD: '1'
     volumes:
       - /Desktop/WordPress/Travel/mysql:/var/lib/mysql
 
