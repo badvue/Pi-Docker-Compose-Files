@@ -1,19 +1,4 @@
 services:
-  foldingathome:
-    image: lscr.io/linuxserver/foldingathome:latest
-    container_name: foldingathome
-    environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=America/Chicago
-      - ACCOUNT_TOKEN=XXXXXXX
-      - MACHINE_NAME=XXXX
-    volumes:
-      - /Desktop/Folding@Home:/config
-    ports:
-      - 7396:7396
-    restart: unless-stopped
-
   heimdall:
     image: lscr.io/linuxserver/heimdall:latest
     container_name: Heimdall
@@ -27,19 +12,19 @@ services:
       - 1443:443
     restart: unless-stopped
 
-  calibre-web:
-    image: lscr.io/linuxserver/calibre-web:latest
-    container_name: Calibre-Web
-    environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=America/Chicago
-    volumes:
-      - /Desktop/Calibre:/config
-      - /Desktop/Calibre/library:/books
-    ports:
-      - 8083:8083
-    restart: unless-stopped
+#  calibre-web:
+#    image: lscr.io/linuxserver/calibre-web:latest
+#    container_name: Calibre-Web
+#    environment:
+#      - PUID=1000
+#      - PGID=1000
+#      - TZ=America/Chicago
+#    volumes:
+#      - /Desktop/Calibre:/config
+#      - /Desktop/Calibre/library:/books
+#    ports:
+#      - 8083:8083
+#    restart: unless-stopped
 
   wireguard:
     image: lscr.io/linuxserver/wireguard:latest
@@ -91,7 +76,7 @@ services:
     environment:
       WORDPRESS_DB_HOST: db
       WORDPRESS_DB_USER: pi
-      WORDPRESS_DB_PASSWORD: XXXXXXXX
+      WORDPRESS_DB_PASSWORD: XXXXXXXXXXX
       WORDPRESS_DB_NAME: wordpressdb1
     volumes:
       - /Desktop/WordPress/wordpress:/var/www/html
@@ -103,7 +88,7 @@ services:
     environment:
       MYSQL_DATABASE: wordpressdb1
       MYSQL_USER: pi
-      MYSQL_PASSWORD: XXXXXXXX
+      MYSQL_PASSWORD: XXXXXXXXXXX
       MYSQL_RANDOM_ROOT_PASSWORD: '1'
     volumes:
       - /Desktop/WordPress/wordpress/mysql:/var/lib/mysql
@@ -118,34 +103,34 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
       - /Desktop/Portainer:/data
 
-  wordpress2:
-    container_name: Mia_Blog
-    image: wordpress
-    restart: unless-stopped
-    depends_on:
-      db2:
-        condition: service_started
-    ports:
-      - 8091:80
-    environment:
-      WORDPRESS_DB_HOST: db2
-      WORDPRESS_DB_USER: pi
-      WORDPRESS_DB_PASSWORD: XXXXXXXX
-      WORDPRESS_DB_NAME: wordpressdb2
-    volumes:
-      - /Desktop/WordPress/Mia_Blog:/var/www/html
+#  wordpress2:
+#    container_name: Mia_Blog
+#    image: wordpress
+#    restart: unless-stopped
+#    depends_on:
+#      db2:
+#        condition: service_started
+#    ports:
+#      - 8091:80
+#    environment:
+#      WORDPRESS_DB_HOST: db2
+#      WORDPRESS_DB_USER: pi
+#      WORDPRESS_DB_PASSWORD: XXXXXXXXXXX
+#      WORDPRESS_DB_NAME: wordpressdb2
+#    volumes:
+#      - /Desktop/WordPress/Mia_Blog:/var/www/html
 
-  db2:
-    container_name: Mia_DB
-    image: yobasystems/alpine-mariadb:latest
-    restart: unless-stopped
-    environment:
-      MYSQL_DATABASE: wordpressdb2
-      MYSQL_USER: pi
-      MYSQL_PASSWORD: XXXXXXXX
-      MYSQL_RANDOM_ROOT_PASSWORD: '1'
-    volumes:
-      - /Desktop/WordPress/Mia_Blog/mysql:/var/lib/mysql
+#  db2:
+#    container_name: Mia_DB
+#    image: yobasystems/alpine-mariadb:latest
+#    restart: unless-stopped
+#    environment:
+#      MYSQL_DATABASE: wordpressdb2
+#      MYSQL_USER: pi
+#      MYSQL_PASSWORD: XXXXXXXXXXX
+#      MYSQL_RANDOM_ROOT_PASSWORD: '1'
+#    volumes:
+#      - /Desktop/WordPress/Mia_Blog/mysql:/var/lib/mysql
 
   nut-ups:
     image: botsudo/nut-upsd:latest
@@ -158,23 +143,10 @@ services:
     environment:
       UPS_NAME: Living_Room
       API_USER: pi
-      API_PASSWORD: XXXXXXXX
-      ADMIN_PASSWORD: XXXXXXXX
+      API_PASSWORD: XXXXXXXXXXX
+      ADMIN_PASSWORD: XXXXXXXXXXX
     volumes:
       - /dev/bus/usb:/dev/bus/usb
-
-  docker_mon:
-    image: philhawthorne/ha-dockermon:edge
-    container_name: ha_dockermon
-    restart: always
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - /Desktop/ha_dockermon:/config
-    ports:
-      - 8126:8126
-    logging:
-      options:
-        max-size: 100m
 
   monitoring:
     image: nicolargo/glances:latest-full
@@ -207,12 +179,10 @@ services:
       - PGID=1000
       - TZ=America/Chicago
       - MONGO_USER=unifi
-      - MONGO_PASS=2B2g1d2r
+      - MONGO_PASS=XXXXXXXXXXX
       - MONGO_HOST=mongodb
       - MONGO_PORT=27017
       - MONGO_DBNAME=unifi
-      - MEM_LIMIT=512
-      - MEM_STARTUP=512
     volumes:
       - /Desktop/Unifi-Network-Application/config:/config
     ports:
@@ -220,7 +190,6 @@ services:
       - 3478:3478/udp
       - 10001:10001/udp
       - 8080:8080
-      - 1900:1900/udp
       - 8843:8843
       - 8880:8880
       - 6789:6789
